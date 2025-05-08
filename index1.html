@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User Pagination</title>
+    <script src="script.js" defer></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        td img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 8px 12px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body onload="getData()">
+    <div class="container">
+        <h1>Random User Data</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Picture</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="buttons">
+            <button id="prevBtn" onclick="onPreviousClick()">Previous</button>
+            <button id="next" onclick="onNextClick()">Next</button>
+        </div>
+    </div>
+</body>
+</html>
