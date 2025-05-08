@@ -1,16 +1,32 @@
-const tableBody = document.querySelector(".table-body");
-const nextBtn = document.getElementById('nextBtn');
+let currentPage = 1; 
+
+const tbody = document.querySelector('tbody');
 const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('next');
 
-let currentPage = 1; // Starti është faqa 1
-const postsPerPage = 10; // 10 postime për faqe
+let totalPosts = 0;
 
-function fetchAndDisplayPosts(page) {
-    fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${postsPerPage}`)
+function getData() {
+    fetchTotalPosts();
+}
+
+function fetchTotalPosts() {
+    fetch('https://jsonplaceholder.typicode.com/posts')
         .then(response => response.json())
-        .then(posts => {
-            tableBody.innerHTML = ''; // Fshij të vjetrat
-            posts.forEach(post => {
+        .then(data => {
+            totalPosts = data.length;
+            fetchPosts(currentPage);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function fetchPosts(page) {
+    fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`)
+        .then(response => response.json())
+        .then(data => {
+            tbody.innerHTML = '';
+
+            data.forEach(post => {
                 const row = `
                     <tr>
                         <td>${post.id}</td>
@@ -18,29 +34,30 @@ function fetchAndDisplayPosts(page) {
                         <td>${post.body}</td>
                     </tr>
                 `;
-                tableBody.innerHTML += row;
+                tbody.innerHTML += row;
             });
 
-            // Ndrysho butonat sipas faqes
+            // Menaxhimi i butonave
             prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = posts.length < postsPerPage;
+
+            const totalPages = Math.ceil(totalPosts / 10); // 10 sepse _limit=10 ne link
+            if (currentPage >= totalPages) {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'inline-block';
+            }
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error('Error:', error));
 }
 
-// Shfaq faqen e parë kur hapet faqja
-fetchAndDisplayPosts(currentPage);
-
-// Kur klikon Next
-nextBtn.addEventListener('click', () => {
+function onNextClick() {
     currentPage++;
-    fetchAndDisplayPosts(currentPage);
-});
+    fetchPosts(currentPage);
+}
 
-// Kur klikon Previous
-prevBtn.addEventListener('click', () => {
+function onPreviousClick() {
     if (currentPage > 1) {
         currentPage--;
-        fetchAndDisplayPosts(currentPage);
+        fetchPosts(currentPage);
     }
-});
+}
