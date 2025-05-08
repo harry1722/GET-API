@@ -6,43 +6,65 @@
     <title>Pagination Table</title>
     <script src="script.js" defer></script>
     <style>
+        body{
+            background-color: azure;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: rgb(177, 222, 233);
         }
         th, td {
-            border: 1px solid #999;
+            border: 3px solid #13087b;
             padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #f0f0f0;
+            background-color: #a6ecf5;
         }
         button {
             margin: 10px 5px;
             padding: 8px 12px;
             font-size: 16px;
+            background-color: rgb(39, 175, 238);
+            
+        }
+        .buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
-<body>
-    <div>
-        <table>
+<body onload="getData()">
+    <div class="container">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Body</th>
+                    <th>Title of Post</th>
+                    <th>Body of Post</th>
                 </tr>
             </thead>
-            <tbody class="table-body">
-                <!-- Ketu do shtohen te dhenat -->
-            </tbody>
+            <tbody></tbody>
         </table>
 
-        <button id="prevBtn">Previous</button>
-        <button id="nextBtn">Next</button>
+    <div class="buttons">
+        <button id="prevBtn"
+        onclick="onPreviousClick()"
+        class="btn btn-primary"
+        >
+        Previous
+    </button>
+        <button
+         id="next"
+         onclick="onNextClick()"
+         class="btn btn-primary"
+        >
+        Next</button>
+    </div>
     </div>
 </body>
 </html>
